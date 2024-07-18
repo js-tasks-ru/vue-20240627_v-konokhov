@@ -7,7 +7,8 @@ export default defineComponent({
     const countMinutesFromMidnight = (hhmm) => {
       const hoursAndMinutes = hhmm.split(':');
       return hoursAndMinutes[0] * 60 + hoursAndMinutes[1] * 1;
-    }
+    };
+
     const isNight = ({dt, sunrise, sunset}) => {
       const dateMinutesFromMidnight = countMinutesFromMidnight(dt);
       const sunriseMinutesFromMidnight = countMinutesFromMidnight(sunrise);
@@ -15,6 +16,7 @@ export default defineComponent({
 
       return dateMinutesFromMidnight < sunriseMinutesFromMidnight || dateMinutesFromMidnight > sunsetMinutesFromMidnight;
     };
+
     return {
       weathers: getWeatherData(),
       weatherConditionIcons: WeatherConditionIcons,
@@ -30,7 +32,7 @@ export default defineComponent({
         <li v-for="weather in weathers" :class="{'weather-card--night': isNight(weather.current)}" class="weather-card">
           <div v-if="weather.alert" class="weather-alert">
             <span class="weather-alert__icon">⚠️</span>
-            <span class="weather-alert__description">{{ weather.alert.sender_name }}: {{ weather.alert.description }}}</span>
+            <span class="weather-alert__description">{{ weather.alert.sender_name }}: {{ weather.alert.description }}</span>
           </div>
           <div>
             <h2 class="weather-card__name">
