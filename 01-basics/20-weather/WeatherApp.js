@@ -21,6 +21,7 @@ export default defineComponent({
       isNight
     }
   },
+
   template: `
     <div>
       <h1 class="title">Погода в Средиземье</h1>
