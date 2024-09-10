@@ -36,11 +36,13 @@ export default defineComponent({
 
     const searchValue = ref('')
 
-    const filteredEmails = computed(() => {
-      if(!searchValue.value) return [];
-      return emails.filter(email => email.toLowerCase().includes(searchValue.value.toLowerCase()))
-    })
-    return {searchValue, emails, filteredEmails}
+    const markedEmails = computed(() =>
+      emails.map(email => ({
+        title: email,
+        isMarked: searchValue.value && email.toLowerCase().includes(searchValue.value.toLowerCase())
+      })
+    ))
+    return {searchValue, markedEmails}
   },
 
   template: `
@@ -49,8 +51,8 @@ export default defineComponent({
         <input type="search" aria-label="Search" v-model="searchValue" />
       </div>
       <ul aria-label="Emails">
-        <li v-for="email in emails" :key="email" :class="{ marked: filteredEmails.includes(email) }">
-          {{ email }}
+        <li v-for="email in markedEmails" :key="email.title" :class="{ marked: email.isMarked }">
+          {{  email.title }}
         </li>
       </ul>
     </div>
